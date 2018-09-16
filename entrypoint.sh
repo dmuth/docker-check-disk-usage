@@ -12,7 +12,8 @@ set -e
 # Keep track of our state
 #
 STATE=""
-#STATE="danger" # Debugging to test to the All Clear message
+#STATE="good" # Debugging
+#STATE="danger" # Debugging
 
 
 #
@@ -42,7 +43,7 @@ do
 		MESSAGE="Disk usage of ${PCT}% is >= warning threshold of ${MAX_PCT}%"
 		echo "# ${MESSAGE}"
 
-		if test ! "${STATE}"
+		if test "${STATE}" != "danger"
 		then
 			DATA="{ \"attachments\": [{ \"text\": \"${MESSAGE}\", \"color\": \"danger\" }] }"
 			curl -X POST -H 'Content-type: application/json' --data "$DATA" $WEBHOOK
@@ -54,23 +55,28 @@ do
 
 		else
 			echo "# State is already set to '${STATE}', not sending a duplicate message."
+
 		fi
 
 	else
 		MESSAGE="All clear!  Disk usage of ${PCT}% is under our threshold of ${MAX_PCT}%!"
 		echo "# ${MESSAGE}"
 
-		if test "${STATE}"
+		if test "${STATE}" != "good"
 		then
 			DATA="{ \"attachments\": [{ \"text\": \"${MESSAGE}\", \"color\": \"good\" }] }"
 			curl -X POST -H 'Content-type: application/json' --data "$DATA" $WEBHOOK
 
+			#
+			# Set this after our message has been successfully sent off to Slack.
+			#
+			STATE="good"
+
 		else
-			echo "# State was already set to empty, not sending another All Clear message."
+			echo "# State is already set to '${STATE}', not sending a duplicate message."
 
 		fi
 
-		STATE=""
 
 	fi
 
