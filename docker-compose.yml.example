@@ -1,0 +1,26 @@
+
+version: "3"
+
+services:
+
+  check:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    restart: on-failure
+    privileged: true
+    #volumes:
+    #  - .:/mnt
+    environment:
+      #
+      # The maximum percentage of disk usage over which we sent an alert.
+      #
+      - MAX_PCT=90
+      #- MAX_PCT=1 # Debugging
+      - WEBHOOK=https://hooks.slack.com/services/FIX_ME
+      - INTERVAL=3600
+      #- INTERVAL=5 # Debugging
+
+
+
+
