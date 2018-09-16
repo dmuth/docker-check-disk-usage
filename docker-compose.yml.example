@@ -20,6 +20,13 @@ services:
       - WEBHOOK=https://hooks.slack.com/services/FIX_ME
       - INTERVAL=3600
       #- INTERVAL=5 # Debugging
+      #
+      # Containers generally can't get info about their parent such as the hostname,
+      # so we want to set this to the hostname or another unique value of the parent.
+      # That way, when alerts are sent, we'll get the name of what host we're reporting on
+      # in the message.
+      #
+      - PARENT_HOSTNAME=FIXME
 
 
 

@@ -40,7 +40,7 @@ do
 	if test $PCT -gt $MAX_PCT
 	then
 
-		MESSAGE="Disk usage of ${PCT}% is >= warning threshold of ${MAX_PCT}%"
+		MESSAGE="Disk usage of ${PCT}% on host ${PARENT_HOSTNAME} is >= warning threshold of ${MAX_PCT}%"
 		echo "# ${MESSAGE}"
 
 		if test "${STATE}" != "danger"
@@ -59,7 +59,7 @@ do
 		fi
 
 	else
-		MESSAGE="All clear!  Disk usage of ${PCT}% is under our threshold of ${MAX_PCT}%!"
+		MESSAGE="All clear!  Disk usage of ${PCT}% on host ${PARENT_HOSTNAME} is under our threshold of ${MAX_PCT}%!"
 		echo "# ${MESSAGE}"
 
 		if test "${STATE}" != "good"
