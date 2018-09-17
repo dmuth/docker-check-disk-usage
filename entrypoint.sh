@@ -17,24 +17,23 @@ STATE=""
 
 
 #
-# Get our total and used bytes
-#
-TOTAL=$(df -B 1 | grep ^overlay | awk '{ print $2 }')
-USED=$(df -B 1 | grep ^overlay | awk '{ print $3 }')
-
-
-#
-# Calculate ther percentage of disk space used
-#
-MATH="scale=2; pct=$USED / $TOTAL * 100; scale=0; pct / 1"
-PCT=$(echo "$MATH" | bc )
-
-
-#
 # Loop and check our disk free percentage
 #
 while true
 do
+
+	#
+	# Get our total and used bytes
+	#
+	TOTAL=$(df -B 1 | grep ^overlay | awk '{ print $2 }')
+	USED=$(df -B 1 | grep ^overlay | awk '{ print $3 }')
+
+
+	#
+	# Calculate ther percentage of disk space used
+	#
+	MATH="scale=2; pct=$USED / $TOTAL * 100; scale=0; pct / 1"
+	PCT=$(echo "$MATH" | bc )
 
 
 	if test $PCT -gt $MAX_PCT
